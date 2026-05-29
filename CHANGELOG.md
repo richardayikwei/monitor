@@ -1,3 +1,9 @@
+## 0.3.0 (2026-05-29)
+
+### Feat
+
+- **config.py,-disk.py,-services.py,-memory.py,-main.py**: use config to update parameters in functions
+
 ## 0.2.0 (2026-05-29)
 
 ### Feat
