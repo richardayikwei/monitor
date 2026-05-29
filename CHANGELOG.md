@@ -1,3 +1,9 @@
+## 0.5.0 (2026-05-29)
+
+### Feat
+
+- **recovery/services.py**: add system restart when any of the services stop
+
 ## 0.4.0 (2026-05-29)
 
 ### Feat
