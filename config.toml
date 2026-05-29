@@ -7,3 +7,5 @@ services = [
     "ssh",
     "tailscaled"
 ]
+
+telegram_enabled = true

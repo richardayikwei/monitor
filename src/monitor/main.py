@@ -5,6 +5,15 @@ from config import load_config
 from checks.disk import check_disk_usage
 from notifications.heartbeat import write_heartbeat
 from recovery.services import restart_service
+from notifications.telegram import send_message
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
 
 def run_checks():
     config = load_config()
@@ -30,10 +39,18 @@ def main():
     alerts = run_checks()
     write_heartbeat()
 
+    if alerts:
+        send_message(
+            TELEGRAM_BOT_TOKEN,
+            TELEGRAM_CHAT_ID,
+            "Monitor check failed"
+        )
+
+ 
     if not alerts:
         print("System healthy")
         return
-
+    
     for alert in alerts:
         print(alert)
         write_alert(alert)
