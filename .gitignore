@@ -11,6 +11,4 @@ wheels/
 .env
 
 # Log files
-logs/monitor.log
-logs/daily_report.log
-logs/heartbeat.txt
+logs/
