@@ -20,6 +20,6 @@ def check_services(services: list[str]):
     for service in services:
         if not service_running(service):
             alerts.append(
-                f"Service down: {service}"
+                service
             )
     return alerts

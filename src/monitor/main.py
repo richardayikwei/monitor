@@ -4,7 +4,7 @@ from notifications.logger import write_alert
 from config import load_config
 from checks.disk import check_disk_usage
 from notifications.heartbeat import write_heartbeat
-
+from recovery.services import restart_service
 
 def run_checks():
     config = load_config()
@@ -37,6 +37,17 @@ def main():
     for alert in alerts:
         print(alert)
         write_alert(alert)
+
+        restart = restart_service(alert)
+
+        if restart:
+            write_alert(
+                f"Restart successful: {alert}"
+            )
+        else:
+            write_alert(
+                    f"Restart failed: {alert}"
+            )
 
 if __name__ == "__main__":
     main()
