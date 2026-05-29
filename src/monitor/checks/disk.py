@@ -1,7 +1,7 @@
 import psutil
 
 
-def check_disk_usage(threshold: int = 90):
+def check_disk_usage(threshold: int):
     alerts = []
 
     usage = psutil.disk_usage("/")

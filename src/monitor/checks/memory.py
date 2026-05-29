@@ -1,7 +1,7 @@
 import psutil
 
 
-def check_memory_usage(threshold: int = 90):
+def check_memory_usage(threshold: int):
     alerts = []
 
     memory = psutil.virtual_memory()
