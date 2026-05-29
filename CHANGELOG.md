@@ -1,3 +1,9 @@
+## 0.6.0 (2026-05-29)
+
+### Feat
+
+- **telegram.py**: Send messages to the telegram bot
+
 ## 0.5.0 (2026-05-29)
 
 ### Feat
