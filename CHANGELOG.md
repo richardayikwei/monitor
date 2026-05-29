@@ -1,3 +1,9 @@
+## 0.4.0 (2026-05-29)
+
+### Feat
+
+- **heartbeat.py,-main.py**: add system heartbeat monitor
+
 ## 0.3.0 (2026-05-29)
 
 ### Feat
