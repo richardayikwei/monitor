@@ -1,0 +1,9 @@
+# config.toml
+
+disk_threshold = 90
+memory_threshold = 90
+
+services = [
+    "ssh",
+    "tailscaled"
+]
