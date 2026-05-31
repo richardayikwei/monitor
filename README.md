@@ -61,6 +61,10 @@ A scheduled summary can be sent containing:
 * Service status
 * System health information
 
+### Boot Notifications
+
+Receive a Telegram message whenever the monitored machine starts.
+
 ### Systemd Integration
 
 Monitor is designed to run using:
@@ -117,14 +121,45 @@ Telegram Notifications
 
 ---
 
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/richardayikwei/monitor.git
+
+cd monitor
+```
+
+### Install Dependencies
+
+```bash
+uv sync
+```
+
+---
+
 ## Configuration
 
 Application settings are stored separately from secrets.
 
+### Create Configuration Files
+
+```bash
+cp config.example.toml config.toml
+
+cp .env.example .env
+```
+
+---
+
 ### Configuration
+
+Example:
 
 ```toml
 disk_threshold = 90
+
 memory_threshold = 90
 
 services = [
@@ -133,12 +168,145 @@ services = [
 ]
 ```
 
+---
+
 ### Environment Variables
 
 ```text
-TELEGRAM_BOT_TOKEN=...
-TELEGRAM_CHAT_ID=...
+TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
+
+TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID
 ```
+
+---
+
+## Telegram Setup
+
+### Create a Bot
+
+1. Open Telegram.
+2. Search for BotFather.
+3. Run:
+
+```text
+/newbot
+```
+
+4. Follow the prompts.
+5. Copy the bot token.
+
+---
+
+### Get Your Chat ID
+
+Send a message to your bot.
+
+Then visit:
+
+```text
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
+```
+
+Locate your:
+
+```text
+chat.id
+```
+
+and place it in:
+
+```text
+TELEGRAM_CHAT_ID
+```
+
+---
+
+## Running Manually
+
+Run a health check:
+
+```bash
+uv run python main.py
+```
+
+Run a daily report:
+
+```bash
+uv run python daily_report.py
+```
+
+Run a boot notification:
+
+```bash
+uv run python boot_notification.py
+```
+
+---
+
+## Systemd Integration
+
+### Monitor Service
+
+Example:
+
+```ini
+[Unit]
+Description=Monitor Health Check
+
+[Service]
+Type=oneshot
+WorkingDirectory=/path/to/monitor
+ExecStart=/path/to/uv run python main.py
+```
+
+### Monitor Timer
+
+Example:
+
+```ini
+[Unit]
+Description=Run Monitor Every 15 Minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target
+```
+
+Enable:
+
+```bash
+sudo systemctl daemon-reload
+
+sudo systemctl enable --now monitor.timer
+```
+
+---
+
+## Daily Reports
+
+A dedicated service and timer can be used to generate daily reports.
+
+Example schedule:
+
+```text
+08:00 every day
+```
+
+---
+
+## Boot Notifications
+
+A dedicated service can be configured to send a notification whenever the machine starts.
+
+Useful for:
+
+* Power outages
+* Unexpected reboots
+* Remote servers
+* Home lab environments
 
 ---
 
@@ -166,6 +334,26 @@ This project began as part of a larger learning journey involving:
 * Infrastructure monitoring
 
 The goal was not only to solve a practical problem but also to gain a deeper understanding of operating and maintaining real systems.
+
+---
+
+## Changelog
+
+See:
+
+```text
+CHANGELOG.md
+```
+
+for release history.
+
+---
+
+## Contributing
+
+Contributions, bug reports, feature requests, and suggestions are welcome.
+
+If you find an issue or have an idea for improvement, please open an issue or submit a pull request.
 
 ---
 
