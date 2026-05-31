@@ -133,8 +133,10 @@ cd monitor
 
 ### Install Dependencies
 
+Install both runtime and development dependencies:
+
 ```bash
-uv sync
+uv sync --all-groups
 ```
 
 ---
@@ -151,8 +153,6 @@ cp config.example.toml config.toml
 cp .env.example .env
 ```
 
----
-
 ### Configuration
 
 Example:
@@ -167,8 +167,6 @@ services = [
     "tailscaled"
 ]
 ```
-
----
 
 ### Environment Variables
 
@@ -195,8 +193,6 @@ TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID
 4. Follow the prompts.
 5. Copy the bot token.
 
----
-
 ### Get Your Chat ID
 
 Send a message to your bot.
@@ -207,7 +203,7 @@ Then visit:
 https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
 ```
 
-Locate your:
+Locate:
 
 ```text
 chat.id
@@ -226,19 +222,19 @@ TELEGRAM_CHAT_ID
 Run a health check:
 
 ```bash
-uv run python main.py
+uv run python src/monitor/main.py
 ```
 
 Run a daily report:
 
 ```bash
-uv run python daily_report.py
+uv run python src/monitor/daily_report.py
 ```
 
 Run a boot notification:
 
 ```bash
-uv run python boot_notification.py
+uv run python src/monitor/boot_notification.py
 ```
 
 ---
@@ -256,7 +252,7 @@ Description=Monitor Health Check
 [Service]
 Type=oneshot
 WorkingDirectory=/path/to/monitor
-ExecStart=/path/to/uv run python main.py
+ExecStart=/path/to/uv run python src/monitor/main.py
 ```
 
 ### Monitor Timer
@@ -307,6 +303,40 @@ Useful for:
 * Unexpected reboots
 * Remote servers
 * Home lab environments
+
+---
+
+## Development
+
+### Commitizen
+
+This project uses Commitizen for conventional commits and automated version management.
+
+Create commits using:
+
+```bash
+uv run cz commit
+```
+
+Generate a version bump:
+
+```bash
+uv run cz bump
+```
+
+View available commands:
+
+```bash
+uv run cz --help
+```
+
+### Development Environment
+
+Install all development dependencies:
+
+```bash
+uv sync --all-groups
+```
 
 ---
 
