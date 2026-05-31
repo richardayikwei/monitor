@@ -1,3 +1,10 @@
+"""
+Daily report
+
+generate report
+send report to telegram
+"""
+
 from config import load_config
 
 from reports.daily import (
@@ -15,6 +22,9 @@ import os
 load_dotenv()
 
 def main() -> None:
+    """
+    Generate report and send via telegram
+    """
     config = load_config()
 
     report = generate_daily_report(

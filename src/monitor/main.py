@@ -1,3 +1,13 @@
+"""
+Run Monitor
+
+check disk usage
+check memory usage
+check services
+send telegram message
+log reports
+"""
+
 from checks.memory import check_memory_usage
 from checks.services import check_services
 from notifications.logger import write_alert
@@ -11,11 +21,14 @@ import os
 
 
 load_dotenv()
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+def run_checks() -> list[str] | list[None]:
+    """
+    Run System checks
 
-def run_checks():
+    Returns:
+        Am empty list or a list of alerts showing the abnormal System variables
+    """
     config = load_config()
     alerts = []
 
@@ -35,14 +48,17 @@ def run_checks():
 
     return alerts
 
-def main():
+def main() -> None:
+    """
+    Run all checks
+    """
     alerts = run_checks()
     write_heartbeat()
 
     if alerts:
         send_message(
-            TELEGRAM_BOT_TOKEN,
-            TELEGRAM_CHAT_ID,
+            os.environ["TELEGRAM_BOT_TOKEN"],
+            os.environ["TELEGRAM_CHAT_ID"],
             "Monitor check failed"
         )
 

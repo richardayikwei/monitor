@@ -1,3 +1,9 @@
+"""
+Send boot notifications
+
+Send boot notifications on reboot or boot of server or device
+"""
+
 from datetime import datetime
 import os
 import socket
@@ -12,6 +18,9 @@ load_dotenv()
 
 
 def main() -> None:
+    """
+    get hostname, time and send notifications to telegram
+    """
     hostname = socket.gethostname()
 
     timestamp = datetime.now().strftime(

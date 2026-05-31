@@ -330,6 +330,66 @@ View available commands:
 uv run cz --help
 ```
 
+### Documentation
+
+This project uses docstrings to document modules, functions, and classes.
+
+#### Generate Docstring Templates
+
+The project uses Pyment to generate docstring skeletons for existing code.
+
+Preview changes without modifying a file:
+
+```bash
+uv run pyment src/monitor/checks/memory.py
+```
+
+Generate and write docstrings to a file:
+
+```bash
+uv run pyment -w -o google src/monitor/checks/memory.py
+```
+
+Generate docstrings for an entire directory:
+
+```bash
+uv run pyment -w -o google src/
+```
+
+> **Note:** It is recommended to review and improve generated docstrings manually. Pyment generates the structure, but meaningful descriptions should be written by the developer.
+
+#### Validate Documentation
+
+The project uses pydocstyle to identify missing or incorrectly formatted docstrings.
+
+Run:
+
+```bash
+uv run pydocstyle src/
+```
+
+This will report issues such as:
+
+* Missing module docstrings
+* Missing function docstrings
+* Missing class docstrings
+
+#### Documentation Philosophy
+
+The goal of documentation is not only to describe what the code does, but also to explain why it exists.
+
+When adding or updating code, contributors are encouraged to document:
+
+* The purpose of the module
+* The purpose of public functions
+* Function arguments
+* Return values
+* Important side effects
+* Design decisions that may not be immediately obvious
+
+```
+```
+
 ### Development Environment
 
 Install all development dependencies:

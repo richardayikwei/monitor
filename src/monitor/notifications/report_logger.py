@@ -1,3 +1,9 @@
+"""
+Logs daily report
+
+Saves daily report to file
+"""
+
 from datetime import datetime
 
 from config import PROJECT_ROOT
@@ -12,6 +18,14 @@ REPORT_FILE = (
 def write_daily_report(
     report: str,
 ) -> None:
+    """
+    Save report to daily_report.log
+    Args:
+      report: str: status of system components and services 
+
+    Returns:
+
+    """
 
     REPORT_FILE.parent.mkdir(
         parents=True,
