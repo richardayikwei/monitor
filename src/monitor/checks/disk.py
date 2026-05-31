@@ -7,7 +7,7 @@ Run a check on disk usage
 import psutil
 
 
-def check_disk_usage(threshold: int) -> list[str] | list[None]:
+def check_disk_usage(threshold: int) -> list[str]:
     """
     Check whether disk usage exceeds a configured threshold.
 
@@ -29,3 +29,13 @@ def check_disk_usage(threshold: int) -> list[str] | list[None]:
         )
 
     return alerts
+
+def get_disk_usage() -> float:
+    """
+    Get current disk utilization percentage.
+
+    Returns:
+        Current disk usage percentage.
+    """
+    usage = psutil.disk_usage("/")
+    return usage.percent
