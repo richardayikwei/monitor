@@ -1,0 +1,17 @@
+# Disk usage threshold percentage
+disk_threshold = 90
+
+# Memory usage threshold percentage
+memory_threshold = 90
+
+# Services to monitor
+services = [
+    "ssh",
+    "tailscaled"
+]
+
+# Daily report settings
+daily_report_enabled = true
+
+# Boot notification settings
+boot_notification_enabled = true
