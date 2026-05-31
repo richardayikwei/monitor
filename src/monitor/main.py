@@ -1,10 +1,10 @@
 """
-Run Monitor
+Run checks.
 
 check disk usage
 check memory usage
 check services
-send telegram message
+send message to telegram
 log reports
 """
 
@@ -21,13 +21,16 @@ import os
 
 
 load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-def run_checks() -> list[str] | list[None]:
+
+def run_checks():
     """
-    Run System checks
+    Run checks.
 
-    Returns:
-        Am empty list or a list of alerts showing the abnormal System variables
+    Returns
+        An empty list or a list containging strs.
     """
     config = load_config()
     alerts = []
@@ -48,10 +51,8 @@ def run_checks() -> list[str] | list[None]:
 
     return alerts
 
-def main() -> None:
-    """
-    Run all checks
-    """
+def main():
+    """Create reports."""
     alerts = run_checks()
     write_heartbeat()
 

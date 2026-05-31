@@ -1,5 +1,5 @@
 """
-Send message to telegram
+Send message to telegram.
 
 Sends message to telegram bot
 """
@@ -13,7 +13,8 @@ def send_message(
     message: str,
 ) -> bool:
     """
-    Send https request to telegram bot containing message payload
+    Send https request to telegram bot containing message payload.
+
     Args:
       token: str: Telegram bot token
       chat_id: str: Telegram bot id 
@@ -21,9 +22,7 @@ def send_message(
 
     Returns:
         boolean of response
-
     """
-
     url = (
         f"https://api.telegram.org/"
         f"bot{token}/sendMessage"

@@ -1,5 +1,5 @@
 """
-Check services running
+Check services running.
 
 Checks services running on pc. service might includer servers
 and other automated scripts
@@ -10,14 +10,13 @@ import subprocess
 
 def service_running(service_name: str) -> bool:
     """
-    Check service to find out status
+    Check service to find out status.
 
     Args:
       service_name: str: the name of the service as represented in the computers system
 
     Returns:
         A boolean
-
     """
     result = subprocess.run(
         [

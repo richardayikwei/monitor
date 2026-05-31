@@ -1,5 +1,5 @@
 """
-Check disk usage
+Check disk usage.
 
 Run a check on disk usage
 """
@@ -8,7 +8,8 @@ import psutil
 
 
 def check_disk_usage(threshold: int) -> list[str] | list[None]:
-    """Check whether disk usage exceeds a configured threshold
+    """
+    Check whether disk usage exceeds a configured threshold.
 
     Args:
       threshold: int: Maximum allowed disk utilization percentage.

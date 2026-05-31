@@ -1,5 +1,5 @@
 """
-Logs daily report
+Logs daily report.
 
 Saves daily report to file
 """
@@ -19,14 +19,11 @@ def write_daily_report(
     report: str,
 ) -> None:
     """
-    Save report to daily_report.log
+    Save report to daily_report.log.
+
     Args:
       report: str: status of system components and services 
-
-    Returns:
-
     """
-
     REPORT_FILE.parent.mkdir(
         parents=True,
         exist_ok=True,

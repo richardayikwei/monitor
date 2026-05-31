@@ -1,5 +1,5 @@
 """
-Write to heartbeat file
+Write to heartbeat file.
 
 Saves the last time the monitoring software run
 """
@@ -12,9 +12,7 @@ HEARTBEAT_FILE = PROJECT_ROOT / "logs" / "heartbeat.txt"
 
 
 def write_heartbeat():
-    """
-    Save last run of monitoring software to heartbeat.txt
-    """
+    """Save last run of monitoring software to heartbeat.txt."""
     timestamp = datetime.now().isoformat()
 
     with open(HEARTBEAT_FILE, "w") as file:

@@ -1,5 +1,5 @@
 """
-Logs alerts
+Logs alerts.
 
 Logs services that fail
 logs restart of services failure
@@ -15,11 +15,10 @@ LOG_FILE = PROJECT_ROOT / "logs" / "monitor.log"
 
 def write_alert(message: str) -> None:
     """
-    Write alerts to monitor.log file
+    Write alerts to monitor.log file.
+
     Args:
       message: str: the name of the alert that failed 
-
-    Returns:
 
     """
     LOG_FILE.parent.mkdir(

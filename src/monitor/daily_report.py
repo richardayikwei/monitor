@@ -1,5 +1,5 @@
 """
-Daily report
+Daily report.
 
 generate report
 send report to telegram
@@ -22,9 +22,7 @@ import os
 load_dotenv()
 
 def main() -> None:
-    """
-    Generate report and send via telegram
-    """
+    """Generate report and send via telegram."""
     config = load_config()
 
     report = generate_daily_report(
