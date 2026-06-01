@@ -10,7 +10,7 @@ import socket
 
 from dotenv import load_dotenv
 
-from notifications.telegram import (
+from monitor.notifications.telegram import (
     send_message,
 )
 

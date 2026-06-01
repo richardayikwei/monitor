@@ -1,21 +1,11 @@
-"""
-Run checks.
-
-check disk usage
-check memory usage
-check services
-send message to telegram
-log reports
-"""
-
-from checks.memory import check_memory_usage
-from checks.services import check_services
-from notifications.logger import write_alert
-from config import load_config
-from checks.disk import check_disk_usage
-from notifications.heartbeat import write_heartbeat
-from recovery.services import restart_service
-from notifications.telegram import send_message
+from monitor.checks.memory import check_memory_usage
+from monitor.checks.services import check_services
+from monitor.notifications.logger import write_alert
+from monitor.config import load_config
+from monitor.checks.disk import check_disk_usage
+from monitor.notifications.heartbeat import write_heartbeat
+from monitor.recovery.services import restart_service
+from monitor.notifications.telegram import send_message
 from dotenv import load_dotenv
 import os
 
@@ -26,12 +16,7 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 
 def run_checks():
-    """
-    Run checks.
-
-    Returns
-        An empty list or a list containging strs.
-    """
+    """ """
     config = load_config()
     alerts = []
 
@@ -52,7 +37,7 @@ def run_checks():
     return alerts
 
 def main():
-    """Create reports."""
+    """ """
     alerts = run_checks()
     write_heartbeat()
 

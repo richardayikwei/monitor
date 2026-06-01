@@ -6,7 +6,7 @@ Saves daily report to file
 
 from datetime import datetime
 
-from config import PROJECT_ROOT
+from monitor.config import PROJECT_ROOT
 
 REPORT_FILE = (
     PROJECT_ROOT

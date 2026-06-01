@@ -5,16 +5,16 @@ generate report
 send report to telegram
 """
 
-from config import load_config
+from monitor.config import load_config
 
-from reports.daily import (
+from monitor.reports.daily import (
     generate_daily_report,
 )
 
-from notifications.report_logger import (
+from monitor.notifications.report_logger import (
     write_daily_report,
 )
-from notifications.telegram import send_message
+from monitor.notifications.telegram import send_message
 from dotenv import load_dotenv
 import os
 

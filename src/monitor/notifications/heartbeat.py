@@ -5,7 +5,7 @@ Saves the last time the monitoring software run
 """
 
 from datetime import datetime
-from config import PROJECT_ROOT
+from monitor.config import PROJECT_ROOT
 
 
 HEARTBEAT_FILE = PROJECT_ROOT / "logs" / "heartbeat.txt"

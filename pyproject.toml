@@ -25,3 +25,19 @@ version = "0.6.0"
 version_files = ["pyproject.toml:version"]
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+monitor = "monitor.main:main"
+monitor-daily-report = "monitor.daily_report:main"
+monitor-boot-notification = "monitor.boot_notification:main"
+monitor-bot = "monitor.bot.main:main"

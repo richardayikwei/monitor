@@ -27,3 +27,7 @@ def check_memory_usage(threshold: int) -> list[str] | list[None]:
                 f"Memory usage critcal: {memory.percent}%"
                 )
     return alerts
+
+def get_memory_usage() -> float:
+    memory = psutil.virtual_memory()
+    return memory.percent
