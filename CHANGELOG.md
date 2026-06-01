@@ -1,3 +1,9 @@
+## 1.1.0 (2026-06-01)
+
+### Feat
+
+- **handlers.py,-services.py,-bot/main.py**: add services report
+
 ## 1.0.0 (2026-06-01)
 
 ### BREAKING CHANGE

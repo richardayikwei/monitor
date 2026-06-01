@@ -1,6 +1,6 @@
 [project]
 name = "monitor"
-version = "1.0.0"
+version = "1.1.0"
 description = "A system monitor that log anomalies on a linux machine and sends out email alerts"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -21,7 +21,7 @@ dev = [
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.0.0"
+version = "1.1.0"
 version_files = ["pyproject.toml:version"]
 update_changelog_on_bump = true
 changelog_file = "CHANGELOG.md"
