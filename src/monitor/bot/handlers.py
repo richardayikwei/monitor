@@ -3,7 +3,9 @@ from telegram.ext import ContextTypes
 import os
 from monitor.checks.memory import get_memory_usage
 from monitor.checks.disk import get_disk_usage
+from monitor.checks.services import build_services_report
 from dotenv import load_dotenv
+from monitor.config import load_config
 
 load_dotenv()
 
@@ -32,6 +34,7 @@ Available Commands
 /help
 /memory
 /disk
+/services
 """
     )
 
@@ -65,4 +68,19 @@ async def disk_command(
 
     await update.message.reply_text(
         f"Disk Usage: {usage}%"
+    )
+
+async def services_command(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE,
+) -> None:
+        
+    config = load_config()
+
+    report = build_services_report(
+        config["services"]
+    )
+
+    await update.message.reply_text(
+        report
     )

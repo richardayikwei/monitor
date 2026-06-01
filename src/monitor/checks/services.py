@@ -65,3 +65,26 @@ def get_service_status(
         return "running"
 
     return "stopped"
+
+def build_services_report(
+    services: list[str]
+) -> str:
+    """
+    Build a services status report.
+    """
+
+    lines = [
+        "Services",
+        "",
+    ]
+
+    for service in services:
+        status = get_service_status(
+            service
+        )
+
+        lines.append(
+            f"{service}: {status}"
+        )
+
+    return "\n".join(lines)

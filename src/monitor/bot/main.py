@@ -7,6 +7,7 @@ from monitor.bot.handlers import (
     help_command,
     memory_command,
     disk_command,
+    services_command
 )
 from dotenv import load_dotenv
 import os
@@ -42,6 +43,13 @@ def main() -> None:
         CommandHandler(
             "disk",
             disk_command,
+        )
+    )
+
+    app.add_handler(
+                CommandHandler(
+                "services",
+                services_command,
         )
     )
 
