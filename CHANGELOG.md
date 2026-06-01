@@ -1,3 +1,18 @@
+## 1.0.0 (2026-06-01)
+
+### BREAKING CHANGE
+
+- All systemd services had to be refactored to accomadate changes to app
+
+### Feat
+
+- **services.py**: add function for telegram bot to check for services running
+- **disk.py**: add a function that will be used by telegram bot to check disk usage
+
+### Fix
+
+- **whole-project**: Turn porject into package to solve import issues
+
 ## 0.6.0 (2026-05-29)
 
 ### Feat
