@@ -1,12 +1,16 @@
 # Monitor
 
-A lightweight Linux monitoring agent built to monitor a personal remote server and deliver alerts through Telegram.
+A lightweight Linux monitoring and operations agent built for personal servers, remote systems, and home lab environments.
 
-## Why I Built This
+Monitor delivers alerts through Telegram and provides an interactive bot interface for querying server health from anywhere.
+
+---
+
+# Why I Built This
 
 After setting up a remotely accessible Linux machine using SSH and Tailscale, I realized I had a new problem:
 
-How would I know if something went wrong?
+**How would I know if something went wrong?**
 
 Questions I wanted answered included:
 
@@ -22,9 +26,9 @@ Monitor is the result.
 
 ---
 
-## Features
+# Features
 
-### Service Monitoring
+## Service Monitoring
 
 Monitor checks the health of configured services.
 
@@ -34,15 +38,15 @@ Examples:
 * tailscaled
 * custom services
 
-### Disk Monitoring
+## Disk Monitoring
 
 Monitor checks disk utilization and generates alerts when configured thresholds are exceeded.
 
-### Memory Monitoring
+## Memory Monitoring
 
 Monitor checks memory usage and reports when usage exceeds configured limits.
 
-### Telegram Notifications
+## Telegram Notifications
 
 Alerts can be delivered directly to Telegram.
 
@@ -52,7 +56,7 @@ Examples:
 * Daily health reports
 * Boot notifications
 
-### Daily Health Reports
+## Daily Health Reports
 
 A scheduled summary can be sent containing:
 
@@ -61,11 +65,31 @@ A scheduled summary can be sent containing:
 * Service status
 * System health information
 
-### Boot Notifications
+## Boot Notifications
 
 Receive a Telegram message whenever the monitored machine starts.
 
-### Systemd Integration
+Useful for:
+
+* Power outages
+* Unexpected reboots
+* Remote servers
+* Home lab environments
+
+## Interactive Telegram Bot
+
+Monitor includes a Telegram bot that allows remote interaction with the monitored server.
+
+Current commands:
+
+* /help
+* /memory
+* /disk
+* /services
+
+The bot runs as a persistent systemd service and allows administrators to query server status without opening an SSH session.
+
+## Systemd Integration
 
 Monitor is designed to run using:
 
@@ -76,7 +100,7 @@ allowing it to operate automatically without requiring additional infrastructure
 
 ---
 
-## Example Notification
+# Example Notification
 
 ```text
 📊 Daily Server Report
@@ -90,40 +114,76 @@ tailscaled: Running
 
 ---
 
-## Architecture
+# Example Bot Interaction
 
 ```text
-systemd timer
-       │
-       ▼
-monitor.service
-       │
-       ▼
-Monitor Agent
-       │
-       ├── Disk Checks
-       ├── Memory Checks
-       ├── Service Checks
-       │
-       ▼
-Telegram Notifications
+/help
+```
+
+Response:
+
+```text
+Available Commands
+
+/help
+/memory
+/disk
+/services
 ```
 
 ---
 
-## Technologies
+# Architecture
+
+```text
+                    Telegram
+                       ▲
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+        │                             │
+        ▼                             ▼
+
+ monitor-bot.service         monitor.service
+        │                           │
+        │                           │
+        ▼                           ▼
+
+ Telegram Commands          Scheduled Checks
+ (/memory, /disk,           (disk, memory,
+  /services, etc.)           services)
+
+        │                           │
+        └──────────────┬────────────┘
+                       │
+                       ▼
+
+                 Monitor Core
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+          ▼            ▼            ▼
+
+       Disk        Memory       Services
+       Checks      Checks       Checks
+```
+
+---
+
+# Technologies
 
 * Python
 * uv
 * systemd
 * Telegram Bot API
 * Linux
+* Tailscale
 
 ---
 
-## Installation
+# Installation
 
-### Clone the Repository
+## Clone the Repository
 
 ```bash
 git clone https://github.com/richardayikwei/monitor.git
@@ -131,21 +191,31 @@ git clone https://github.com/richardayikwei/monitor.git
 cd monitor
 ```
 
-### Install Dependencies
+## Install Dependencies
 
-Install both runtime and development dependencies:
+Install runtime and development dependencies:
 
 ```bash
 uv sync --all-groups
 ```
 
+## Install Package in Editable Mode
+
+```bash
+uv pip install -e .
+```
+
+Monitor uses an editable installation during development.
+
+This allows source code changes to take effect immediately without requiring reinstallation.
+
 ---
 
-## Configuration
+# Configuration
 
 Application settings are stored separately from secrets.
 
-### Create Configuration Files
+## Create Configuration Files
 
 ```bash
 cp config.example.toml config.toml
@@ -153,7 +223,7 @@ cp config.example.toml config.toml
 cp .env.example .env
 ```
 
-### Configuration
+## Configuration
 
 Example:
 
@@ -168,7 +238,7 @@ services = [
 ]
 ```
 
-### Environment Variables
+## Environment Variables
 
 ```text
 TELEGRAM_BOT_TOKEN=YOUR_TELEGRAM_BOT_TOKEN
@@ -178,9 +248,9 @@ TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID
 
 ---
 
-## Telegram Setup
+# Telegram Setup
 
-### Create a Bot
+## Create a Bot
 
 1. Open Telegram.
 2. Search for BotFather.
@@ -193,11 +263,11 @@ TELEGRAM_CHAT_ID=YOUR_TELEGRAM_CHAT_ID
 4. Follow the prompts.
 5. Copy the bot token.
 
-### Get Your Chat ID
+## Get Your Chat ID
 
 Send a message to your bot.
 
-Then visit:
+Visit:
 
 ```text
 https://api.telegram.org/bot<YOUR_BOT_TOKEN>/getUpdates
@@ -217,31 +287,39 @@ TELEGRAM_CHAT_ID
 
 ---
 
-## Running Manually
+# Running Manually
 
-Run a health check:
+## Health Check
 
 ```bash
-uv run python src/monitor/main.py
+uv run monitor
 ```
 
-Run a daily report:
+## Daily Report
 
 ```bash
-uv run python src/monitor/daily_report.py
+uv run monitor-daily-report
 ```
 
-Run a boot notification:
+## Boot Notification
 
 ```bash
-uv run python src/monitor/boot_notification.py
+uv run monitor-boot-notification
+```
+
+## Telegram Bot
+
+```bash
+uv run monitor-bot
 ```
 
 ---
 
-## Systemd Integration
+# Systemd Integration
 
-### Monitor Service
+## Monitor Service
+
+Runs scheduled health checks.
 
 Example:
 
@@ -252,10 +330,10 @@ Description=Monitor Health Check
 [Service]
 Type=oneshot
 WorkingDirectory=/path/to/monitor
-ExecStart=/path/to/uv run python src/monitor/main.py
+ExecStart=/path/to/.venv/bin/monitor
 ```
 
-### Monitor Timer
+## Monitor Timer
 
 Example:
 
@@ -281,9 +359,9 @@ sudo systemctl enable --now monitor.timer
 
 ---
 
-## Daily Reports
+## Daily Report Service
 
-A dedicated service and timer can be used to generate daily reports.
+Runs a scheduled report.
 
 Example schedule:
 
@@ -291,24 +369,82 @@ Example schedule:
 08:00 every day
 ```
 
----
+Typically implemented using:
 
-## Boot Notifications
-
-A dedicated service can be configured to send a notification whenever the machine starts.
-
-Useful for:
-
-* Power outages
-* Unexpected reboots
-* Remote servers
-* Home lab environments
+```text
+daily-report.service
+daily-report.timer
+```
 
 ---
 
-## Development
+## Boot Notification Service
 
-### Commitizen
+Runs once whenever the machine starts.
+
+Typically implemented using:
+
+```text
+boot-notification.service
+```
+
+No timer is required.
+
+---
+
+## Telegram Bot Service
+
+Runs continuously and listens for Telegram commands.
+
+Example:
+
+```ini
+[Unit]
+Description=Monitor Telegram Bot
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/path/to/monitor
+ExecStart=/path/to/.venv/bin/monitor-bot
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable:
+
+```bash
+sudo systemctl daemon-reload
+
+sudo systemctl enable --now monitor-bot.service
+```
+
+---
+
+# Telegram Commands
+
+| Command   | Description                      |
+| --------- | -------------------------------- |
+| /help     | Show available commands          |
+| /memory   | Display current memory usage     |
+| /disk     | Display current disk usage       |
+| /services | Display monitored service status |
+
+Planned commands:
+
+* /status
+* /uptime
+* /report
+
+---
+
+# Development
+
+## Commitizen
 
 This project uses Commitizen for conventional commits and automated version management.
 
@@ -330,21 +466,21 @@ View available commands:
 uv run cz --help
 ```
 
-### Documentation
+---
+
+## Documentation
 
 This project uses docstrings to document modules, functions, and classes.
 
-#### Generate Docstring Templates
+### Generate Docstring Templates
 
-The project uses Pyment to generate docstring skeletons for existing code.
-
-Preview changes without modifying a file:
+Preview changes:
 
 ```bash
 uv run pyment src/monitor/checks/memory.py
 ```
 
-Generate and write docstrings to a file:
+Generate and write docstrings:
 
 ```bash
 uv run pyment -w -o google src/monitor/checks/memory.py
@@ -356,41 +492,36 @@ Generate docstrings for an entire directory:
 uv run pyment -w -o google src/
 ```
 
-> **Note:** It is recommended to review and improve generated docstrings manually. Pyment generates the structure, but meaningful descriptions should be written by the developer.
+> Pyment generates the structure, but meaningful descriptions should be written by the developer.
 
-#### Validate Documentation
-
-The project uses pydocstyle to identify missing or incorrectly formatted docstrings.
-
-Run:
+### Validate Documentation
 
 ```bash
 uv run pydocstyle src/
 ```
 
-This will report issues such as:
+This reports:
 
 * Missing module docstrings
 * Missing function docstrings
 * Missing class docstrings
 
-#### Documentation Philosophy
+### Documentation Philosophy
 
 The goal of documentation is not only to describe what the code does, but also to explain why it exists.
 
-When adding or updating code, contributors are encouraged to document:
+Contributors are encouraged to document:
 
-* The purpose of the module
-* The purpose of public functions
+* Module purpose
+* Public functions
 * Function arguments
 * Return values
 * Important side effects
-* Design decisions that may not be immediately obvious
+* Non-obvious design decisions
 
-```
-```
+---
 
-### Development Environment
+## Development Environment
 
 Install all development dependencies:
 
@@ -400,19 +531,20 @@ uv sync --all-groups
 
 ---
 
-## Roadmap
+# Roadmap
 
 Planned improvements include:
 
-* State-based alerts
 * Service recovery notifications
+* State-based alerts
 * Historical reporting
-* Node-to-node monitoring
-* Integration with future Community Compute experiments
+* Enhanced Telegram bot commands
+* Multi-node monitoring
+* Integration with Community Compute experiments
 
 ---
 
-## Motivation
+# Motivation
 
 This project began as part of a larger learning journey involving:
 
@@ -427,7 +559,7 @@ The goal was not only to solve a practical problem but also to gain a deeper und
 
 ---
 
-## Changelog
+# Changelog
 
 See:
 
@@ -439,7 +571,7 @@ for release history.
 
 ---
 
-## Contributing
+# Contributing
 
 Contributions, bug reports, feature requests, and suggestions are welcome.
 
@@ -447,7 +579,6 @@ If you find an issue or have an idea for improvement, please open an issue or su
 
 ---
 
-## License
+# License
 
 Released under the MIT License.
-
