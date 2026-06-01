@@ -48,3 +48,20 @@ def check_services(services: list[str]) -> list[str] | list[None]:
                 service
             )
     return alerts
+
+def get_service_status(
+    service_name: str
+) -> str:
+    """
+    Get service status.
+
+    Args:
+        service_name: Systemd service name.
+
+    Returns:
+        "running" or "stopped"
+    """
+    if service_running(service_name):
+        return "running"
+
+    return "stopped"
